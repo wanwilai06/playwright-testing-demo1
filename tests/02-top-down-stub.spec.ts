@@ -36,14 +36,8 @@ test('Top-Down STUB: Login REAL -> Inventory STUB', async ({ page }) => {
       </head>
       <body>
         <h1>Card Stub Inventory</h1>
-        
-        <!-- แสดงชื่อและนามสกุลนักศึกษา -->
-        <div data-test="student-info" style="font-size: 18px; font-weight: bold; color: blue;">
-          ผู้จัดทำ: วรรณวิลัย เรืองนาค
-        </div>
-
         <div class="inventory_list" data-test="card-stub-inventory">
-          Fake Inventory Content from card.html Stub
+          วรรณวิลัย เรืองนาค
         </div>
       </body>
     </html>
@@ -59,6 +53,6 @@ test('Top-Down STUB: Login REAL -> Inventory STUB', async ({ page }) => {
 
   await expect(
     page.locator('[data-test="card-stub-inventory"]')
-  ).toContainText('Fake Inventory Content from card.html Stub');
+  ).toContainText('วรรณวิลัย เรืองนาค');
 
 });
