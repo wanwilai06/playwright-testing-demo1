@@ -55,7 +55,7 @@ test('Bottom-Up DRIVER: Driver A -> B card -> E Card Action', async ({ browser }
     // ===================================================
     // B = Inventory จริง
     // ===================================================
-    await expect(page.locator('.cart_contents"')).toBeVisible();
+    await expect(page.locator('.cart_contents')).toBeVisible();
 
     // ===================================================
     // E = Add Cart จริง
