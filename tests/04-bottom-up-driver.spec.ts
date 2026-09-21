@@ -10,7 +10,7 @@ import {
 // ทำหน้าที่แทน Login Layer ด้านบน
 // ไม่กรอก username/password ผ่านหน้า Login
 // =====================================================
-async function driverOpenInventory(
+async function driverOpenCart(
   context: BrowserContext
 ): Promise<Page> {
 
@@ -24,29 +24,18 @@ async function driverOpenInventory(
   ]);
 
   const page = await context.newPage();
-  await page.goto('https://www.saucedemo.com/inventory.html');
+  await page.goto('https://www.saucedemo.com/cart.html');
 
-  await page.setContent(`
-    <!doctype html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <title>Card Driver Test</title>
-      </head>
-      <body>
-        <h1>Card Driver Integration</h1>
-        
-        <!-- แสดงชื่อและนามสกุลนักศึกษา-->
-        <div data-test="student-info" style="font-size: 18px; font-weight: bold; color: green;">
-          ผู้จัดทำ (Driver): วรรณวิลัย เรืองนาค
-        </div>
-
-        <div class="inventory_list" data-test="driver-card-content">
-          Card Content loaded successfully via Driver
-        </div>
-      </body>
-    </html>
-  `);
+  await page.evaluate(() => {
+    const studentDiv = document.createElement('div');
+    studentDiv.setAttribute('data-test', 'student-info');
+    studentDiv.style.fontSize = '18px';
+    studentDiv.style.fontWeight = 'bold';
+    studentDiv.style.color = 'green';
+    studentDiv.style.padding = '10px';
+    studentDiv.textContent = 'ผู้จัดทำ (Driver): วรรณวิลัย เรืองนาค';
+    document.body.prepend(studentDiv);
+  });
   return page;
 }
 
@@ -57,12 +46,12 @@ test('Bottom-Up DRIVER: Driver -> Card HTML Integration', async ({ browser }) =>
     // ===================================================
     // Driver A เรียก Layer ด้านล่าง
     // ===================================================
-    const page = await driverOpenInventory(context);
+    const page = await driverOpenCart(context);
 
     // ===================================================
     // B = Inventory จริง
     // ===================================================
-    await expect(page.locator('[data-test="driver-card-content"]')).toBeVisible();
+    await expect(page.locator('.cart_contents"]')).toBeVisible();
 
     // ===================================================
     // E = Add Cart จริง
